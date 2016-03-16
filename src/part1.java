@@ -11,17 +11,7 @@ public class part1 {
 			System.out.println(variableOverflow);
 		}
 	}
-	// Java program for Fibonacci number using recursion.
-    public static int fibonacciRecursion(int number){
-        if(number == 1 || number == 2){
-            return 1;
-        }
-        
-        int fib = fibonacciRecursion(number-1) + fibonacciRecursion(number -2);
-        //System.out.println(fib);
-        return fib; //tail recursion
-    }
- 
+
     // Java program for Fibonacci number using Loop.
     public static int fibonacciLoop(int number){
         if(number == 1 || number == 2){
