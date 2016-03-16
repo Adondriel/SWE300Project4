@@ -12,8 +12,7 @@ public class part2 {
 			value = doFunction(i);
 			System.out.println(value);
 		}
-	}
-	
+	}	
 	public static double doFunction(double t){
 		return Math.sin(t)/t;
 	}
