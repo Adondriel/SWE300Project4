@@ -1,0 +1,2 @@
+1. Making all variables within Pokemon private, for principle of information hiding.
+2. Making setters for all of the variables within Pokemon.
