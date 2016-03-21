@@ -30,7 +30,7 @@ public class Worker{
 	private String country;
 	private String phone;
 	
-	private double hours;
+	private double hours=0;
 	private double commissionEarned;
 	private double totalSales;
 	ArrayList<String> workList=new ArrayList<>();
@@ -44,7 +44,7 @@ public class Worker{
 		this.salary=salary;
 		this.per=per;
 		this.commission = (commission.equals("")) ? "0.0" : commission;
-		hours=0;
+		//hours=0;
 		this.taxID=taxID;
 		this.street=street;
 		this.city=city;
