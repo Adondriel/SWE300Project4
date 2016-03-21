@@ -107,23 +107,36 @@ public class Hours {
 	 * @param workers 
 	 */
 	public static void sort(ArrayList<Worker> workers){
+		//Array list of sorted workers
 		ArrayList<Worker> sortedWorkers=new ArrayList<>();
+		
+		//Set of departments, used to make sure there aren't duplicate departments
 		Set<String> set = new HashSet<String>();
+		
+		//The set converted into an array
 		String[] setArray=new String[1000];
 		int k=0;
+		
+		//Add the workers' departments to the set
 		for(Worker w : workers){
 			set.add(w.getDept());
 		}
 		
+		//For each element of the set, add a department from the set to the setArray, increment k by 1
 		for(String s : set){
 			setArray[k]=s;
 			k++;
+			
+			//For each worker in the array list of workers, if the worker's department equals the current department, add them to the sorted workers array list
 			for(Worker w : workers){
 				if(w.getDept().equalsIgnoreCase(s)){
 					sortedWorkers.add(w);
 				}
 			}
 		}
+		
+		//---------------------------------------------------------------------------------------------------------
+		//The total pay of the department
 		double departmentPay=0;
 		DecimalFormat numberFormat1=new DecimalFormat("#.00");
 		double d=sortedWorkers.get(0).calculatePayHours();
