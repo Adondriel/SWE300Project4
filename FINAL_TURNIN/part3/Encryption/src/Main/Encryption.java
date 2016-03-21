@@ -1,0 +1,144 @@
+/**
+ * @author Josh McMillen
+ * To be Refractored by: Adam Pine, Benjamin Uleau, and Josh McMillen
+ **/
+package Main;
+
+public class Encryption
+{
+	String DEFAULT = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',!@#$%^&*()-_=+? .";
+	String LOWER = "abcdefghijklmnopqrstuvwxyz";
+	String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	char[][] GridA = new char[9][9];
+	
+	public String encrypt(String input){
+		String tempA = "";
+		String tempB = "";
+		
+		for(int i=0; i < 9; i++){
+			for(int j=0; j < 9; j++){
+				GridA[i][j] = DEFAULT.charAt( ( i * 9 ) + j );
+			}
+		}
+		
+		for(int i=0; i < input.length(); i++){
+			for(int j=0; j < 9; j++){
+				for(int k=0; k < 9; k++){
+					if( GridA[k][j] == input.charAt( i ) ){
+						tempA += k+""+j;
+					}
+				}
+			}
+		}
+		
+		for(int i=0; i < (tempA.length()) / 2; i++){
+			tempB += GridA[ Character.getNumericValue(tempA.charAt(i)) ][ Character.getNumericValue(tempA.charAt(tempA.length()-1-i)) ];
+		}
+		
+		tempA = "";
+		
+		for(int i=0; i < tempB.length(); i++){
+			for(int j=0; j < 9; j++){
+				for(int k=0; k < 9; k++){
+					if( GridA[k][j] == tempB.charAt( i ) ){
+						tempA += k+""+j;
+					}
+				}
+			}
+		}
+		
+		tempB = getBinary( tempA );
+		
+		tempA = "";
+		
+		for(int i=0; i < tempB.length(); i++){
+			int rand = (int)(Math.random()*26);
+			if( tempB.charAt(i) == '0' ){
+				tempA += LOWER.charAt( rand );
+			}else{
+				tempA += UPPER.charAt( rand );
+			}
+		}
+		
+		return tempA;		
+	}
+	
+	public String getBinary( String text ){
+		String out = "";
+		for(int i=0; i < text.length(); i++){
+			switch( text.charAt( i ) ){
+				case '0': out += "0000"; break;
+				case '1': out += "0001"; break;
+				case '2': out += "0010"; break;
+				case '3': out += "0011"; break;
+				case '4': out += "0100"; break;
+				case '5': out += "0101"; break;
+				case '6': out += "0110"; break;
+				case '7': out += "0111"; break;
+				case '8': out += "1000"; break;
+				case '9': out += "1001"; break;
+			}
+		}
+		return out;
+	}
+	
+	public String decrypt(String input){
+		
+		for(int i=0; i < 9; i++){
+			for(int j=0; j < 9; j++){
+				GridA[i][j] = DEFAULT.charAt( ( i * 9 ) + j );
+			}
+		}
+		
+		String tempA = "";
+		String tempB = "";
+		for(int i=0; i<input.length(); i++){
+			if(LOWER.contains(input.charAt(i)+"")){
+				tempA += "0";
+			}else{
+				tempA += "1";
+			}
+		}
+		
+		tempB = getNumeric( tempA );
+		
+		tempA = "";
+		String tempC = "";
+		
+		for(int i=0;i<=tempB.length()-2;i+=2){			
+			tempA += tempB.charAt(i);
+			tempC = tempB.charAt(i+1)+tempC;
+		}
+		
+		tempA += tempC;
+		
+		tempB = "";
+		
+		for(int i=0; i<=tempA.length()-2;i+=2){
+			tempB += GridA[ Character.getNumericValue(tempA.charAt(i)) ][ Character.getNumericValue(tempA.charAt(i+1)) ];
+		}
+		
+		return tempB;
+	}
+	
+	public String getNumeric( String text ){
+		String out = "";
+		for(int i=0; i < text.length(); i+=4){
+			switch( text.substring(i,i+4) ){
+				case "0000": out += '0'; break;
+				case "0001": out += '1'; break;
+				case "0010": out += '2'; break;
+				case "0011": out += '3'; break;
+				case "0100": out += '4'; break;
+				case "0101": out += '5'; break;
+				case "0110": out += '6'; break;
+				case "0111": out += '7'; break;
+				case "1000": out += '8'; break;
+				case "1001": out += '9'; break;
+			}
+		}
+		return out;
+	}
+	
+}
